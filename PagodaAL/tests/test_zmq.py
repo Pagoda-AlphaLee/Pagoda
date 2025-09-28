@@ -19,10 +19,10 @@ if __name__ == '__main__':
     try:
         # 初始化管理器（IP、发送端口、接收端口、订阅主题）
         zmq_manager = ZmqManager(
-            ip="10.12.6.250",
-            sender_port=5557,
-            receiver_port=5558,
-            subscribe_topics=["<Dome>"]
+            ip="127.0.0.1",
+            sender_port=1111,
+            receiver_port=2222,
+            subscribe_topics=["test"]
         )
 
         # 测试发送消息
@@ -43,4 +43,5 @@ if __name__ == '__main__':
     finally:
         # 显式删除管理器实例，触发析构函数
         del zmq_manager
+
         print("Test completed")

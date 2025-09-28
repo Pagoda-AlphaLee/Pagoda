@@ -6,7 +6,7 @@ import logging
 from typing import List, Optional
 import time
 
-# 配置日志（匹配Qt的调试输出风格）
+# 配置日志
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - ZmqSub - %(levelname)s - %(message)s'
@@ -22,9 +22,9 @@ class ZmqSub:
 
     def __init__(self, ip: str, port: int, scribe: List[str]):
         """
-        构造函数（对应Qt的ZmqSub构造函数）
-        :param ip: 发布者IP地址（如"10.12.6.250"）
-        :param port: 发布者端口（如5557）
+        构造函数
+        :param ip: 发布者IP地址
+        :param port: 发布者端口
         :param scribe: 订阅主题列表（对应Qt的QStringList scribe，如["Dome", "Camera"]）
         """
         logger.info(f"ZmqSub instance created: IP={ip}, Port={port}, Scribe={scribe}")
@@ -67,13 +67,13 @@ class ZmqSub:
             # 3. 设置接收超时（1秒，避免无限阻塞，提升鲁棒性）
             self.sub_socket.RCVTIMEO = 1000  # 单位：毫秒
 
-            # 4. 拼接连接地址（对应Qt的"tcp://" + ip + ":" + port）
+            # 4. 拼接连接地址
             connect_addr = f"tcp://{ip}:{port}"
             logger.info(f"Connecting to publisher: {connect_addr}")
             self.sub_socket.connect(connect_addr)
             logger.info(f"Connected to publisher successfully: {connect_addr}")
 
-            # 5. 订阅指定主题（对应Qt的循环zmq_setsockopt(ZMQ_SUBSCRIBE)）
+            # 5. 订阅指定主题
             for topic in scribe:
                 if not isinstance(topic, str) or not topic.strip():
                     logger.warning(f"Skipping invalid topic: {topic} (must be non-empty string)")
@@ -106,7 +106,7 @@ class ZmqSub:
                 logger.info(f"Received envelope (msgReceiver): '{envelope}'")
 
                 # 2. 接收第二帧：实际消息内容（对应发送端的s_send(reply)）
-                message = self.sub_socket.recv_string()  # 接收reply（如"<Uid=Dome.TurnOff.0.0>..."）
+                message = self.sub_socket.recv_string()  # 接收reply
                 logger.info(f"Received message content: '{message}'")
                 # --------------------------------------------------------------------------------
 
@@ -153,7 +153,7 @@ class ZmqSub:
 # --- 测试代码（仅接收端，无发送端、无多线程）---
 if __name__ == '__main__':
     # -------------------------- 测试配置（需根据实际环境修改）--------------------------
-    PUBLISHER_IP = "127.0.0.1"    # 发布者IP（如实际地址为10.12.6.250则修改）
+    PUBLISHER_IP = "127.0.0.1"    # 发布者IP
     PUBLISHER_PORT = 2222         # 发布者端口（需与发送端一致）
     # 订阅主题列表（需与发送端的msgReceiver标签完全匹配，如["Dome", "Camera"]）
     SUBSCRIBE_ENVELOPES = ["test"]

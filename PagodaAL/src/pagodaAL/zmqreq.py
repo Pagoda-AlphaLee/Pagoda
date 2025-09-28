@@ -146,7 +146,7 @@ class ZmqReqClient:
 # --- 使用示例 ---
 if __name__ == '__main__':
     # 1. 创建客户端实例
-    zmq_client = ZmqReqClient(ip="10.12.6.250", port=5557)
+    zmq_client = ZmqReqClient(ip="127.0.0.1", port=1111)
 
     try:
         # 2. 初始化连接

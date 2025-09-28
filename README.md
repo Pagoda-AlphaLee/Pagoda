@@ -1,5 +1,5 @@
 # A ZeroMQ-based Communication Library
-
+It cannot be used directly.
 ### 1. Installation
 ```bash
 pip install pyzmq
